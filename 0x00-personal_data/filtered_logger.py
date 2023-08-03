@@ -3,7 +3,7 @@
 script for handling the personal data
 """
 import re
-from typping import List
+from typing import List
 import logging
 
 def filter_datum(fields: List, redaction: str,
@@ -23,7 +23,7 @@ def filter_datum(fields: List, redaction: str,
     filter_datum should be less than 5 lines long and use
     re.sub to perform the substitution with a single regex.
     """
-    for field in fields:
+    for f in fields:
         message = re.sub(f'{f}=.*?{separator}',
                         f'{f}={redaction}{separator}', message)
     return message
