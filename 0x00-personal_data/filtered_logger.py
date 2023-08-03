@@ -55,7 +55,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     returns MySQLConnection object to access the personal dta
 
     Returns:
-        A MySQLConnection object that extract detail saved 
+        A MySQLConnection object that extract detail saved
         on the environment.
     """
     username = environ.get('PERSONAL_DATA_DB_USERNAME', "root")
