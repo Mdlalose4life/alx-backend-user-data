@@ -70,6 +70,24 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return connect
 
 
+def main():
+    """
+    Main function to retrieve user data from database and log to console
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT *FROM users;")
+    field_name = [i[0] for i in cursor.description]
+
+    logger = get_logger()
+
+    for row in cursor:
+        str_row = ''.join(f'{f}={str(r)}; ' for r, f in zip(row, field_name))
+        logger.info(str_row.strip())
+    
+    cursor.close()
+    db.close()
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
