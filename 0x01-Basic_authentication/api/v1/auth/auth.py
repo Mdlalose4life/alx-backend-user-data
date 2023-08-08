@@ -7,6 +7,7 @@ from typing import List, TypeVar
 
 class Auth:
     """
+    description
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """agrs:
@@ -34,6 +35,7 @@ class Auth:
                     return False
 
         return True
+
 
     def authorization_header(self, request=None) -> str:
         """args:
