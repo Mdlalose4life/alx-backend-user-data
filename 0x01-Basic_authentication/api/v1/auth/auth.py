@@ -36,7 +36,6 @@ class Auth:
 
         return True
 
-
     def authorization_header(self, request=None) -> str:
         """args:
                 request
@@ -47,9 +46,9 @@ class Auth:
             return None
         header = request.headers.get('Authorization')
 
-        if header == None:
+        if header is None:
             return None
-        
+
         return header
 
     def current_user(self, request=None) -> TypeVar('User'):
