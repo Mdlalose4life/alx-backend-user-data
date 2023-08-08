@@ -19,8 +19,8 @@ def forbidden() -> str:
     """ GET /api/v1/forbidden
     Return:
       - The ststus of the api
-   """
-    abort(403, description='forbidden')
+    """
+    abort(403, description='Forbidden')
 
 
 @app_views.route("/unauthorized", methods=['GET'], strict_slashes=False)
