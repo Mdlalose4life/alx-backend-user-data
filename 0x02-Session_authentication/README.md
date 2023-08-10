@@ -1,1 +1,1 @@
-The readme for Basic authentication
+The readme for Session authentication
