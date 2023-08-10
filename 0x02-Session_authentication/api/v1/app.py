@@ -30,6 +30,7 @@ else:
 @app.before_request
 def before_request():
     """
+    Handle the request by checking for authentication and authorization.
     """
     if auth is None:
         pass
