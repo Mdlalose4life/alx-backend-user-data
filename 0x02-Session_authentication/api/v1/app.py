@@ -41,6 +41,12 @@ def before_request():
             if auth.current_user(request) is None:
                 abort(403, description="Forbidden")
 
+        user = auth.current_user(request)
+        if user is None:
+            abort(403)
+
+        request.current_user = user
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:
