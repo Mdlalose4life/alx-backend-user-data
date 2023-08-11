@@ -31,21 +31,22 @@ def before_request():
        Handle the request by checking for authentication and authorization.
     """
     if auth is None:
-        pass
+        return
     else:
         excluded_list = ['/api/v1/status/',
-                         '/api/v1/unauthorized/', '/api/v1/forbidden/']
+                         '/api/v1/unauthorized/',
+                         '/api/v1/forbidden/']
 
-        if auth.require_auth(request.path, excluded_list):
-            if auth.authorization_header(request) is None:
-                abort(401, description="Unauthorized")
-            if auth.current_user(request) is None:
-                abort(403, description="Forbidden")
-        
     user = auth.current_user(request)
-    if user is None:
-        abort(403)
     request.current_user = user
+
+    if auth.require_auth(request.path, excluded_list):
+        if auth.authorization_header(request) is None:
+            abort(401, description="Unauthorized")
+        if auth.current_user(request) is None:
+            abort(403, description="Forbidden")
+
+
 
 
 @app.errorhandler(404)
