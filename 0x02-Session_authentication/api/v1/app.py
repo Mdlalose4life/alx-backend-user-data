@@ -38,10 +38,16 @@ def before_request():
     else:
         excluded_list = ['/api/v1/status/',
                          '/api/v1/unauthorized/',
-                         '/api/v1/forbidden/']
+                         '/api/v1/forbidden/',
+                         '/api/v1/auth_session/login/']
 
     user = auth.current_user(request)
     request.current_user = user
+
+    auth_header = auth.authorization_header(request)
+    session_cookies = auth.session_cookie(request)
+    if auth_header and session_cookies is None:
+        abort(401)
 
     if auth.require_auth(request.path, excluded_list):
         if auth.authorization_header(request) is None:
