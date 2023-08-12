@@ -41,9 +41,6 @@ def before_request():
                          '/api/v1/forbidden/',
                          '/api/v1/auth_session/login/']
 
-    user = auth.current_user(request)
-    request.current_user = user
-
     if not auth.require_auth(request.path, excluded_list):
         return
 
@@ -57,6 +54,11 @@ def before_request():
             abort(401, description="Unauthorized")
         if auth.current_user(request) is None:
             abort(403, description="Forbidden")
+
+    user = auth.current_user(request)
+    if user is None:
+        abort(403)
+    request.current_user = user
 
 
 @app.errorhandler(404)
