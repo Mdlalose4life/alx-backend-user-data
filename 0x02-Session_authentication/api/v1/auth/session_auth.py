@@ -21,10 +21,10 @@ class SessionAuth(Auth):
             return None
         else:
             # Generate the Session ID for the user
-            sessison_id = str(uuid4())
-            self.user_id_by_session_id[sessison_id] = user_id
+            session_id = str(uuid4())
+            self.user_id_by_session_id[session_id] = user_id
             # Return Session ID
-            return sessison_id
+            return session_id
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """
@@ -51,3 +51,16 @@ class SessionAuth(Auth):
         user = User.get(user_id)
         # Retuns the user instance
         return user
+    
+    def destroy_session(self, request=None):
+        """
+        Method to delete the user session/logout.
+        """
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_id)
+        # If the request is equal to None return False
+        if (request is None or session_id is None) or use_id is None:
+            return False
+        if session_id in self.user_id_by_session_id:
+            del self.user_id_by_session_id[session_id]
+        return True

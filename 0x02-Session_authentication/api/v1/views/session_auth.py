@@ -3,6 +3,7 @@
 """
 
 import os
+from api.v1.app import auth
 from api.v1.views import app_views
 from api.v1.views import app_views
 from models.user import User
@@ -47,3 +48,13 @@ def session_auth_login() -> Tuple[str, int]:
     response.set_cookie(os.getenv("SESSION_NAME"), session_id)
     # return the response
     return response
+
+@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+def auth_logout():
+    """
+    DELETE /api/v1/auth_session/logout
+    """
+    is_deleted = auth.destroy_session(request)
+    if not is_deleted:
+        abort(404)
+    return jsonify({}), 200
