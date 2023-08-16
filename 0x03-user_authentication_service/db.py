@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """DB module
 """
+from typing import Dict
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -45,3 +48,18 @@ class DB:
             self._session.rollback()
             raise
         return new_user
+
+    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
+        """Method that returns the user based on the given kwarg
+            Otherwise rasie exception if:
+                Invalid Kwarg is passed.
+                No results founf with the passed kwag
+        """
+        user = self._session
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+        except NoResultFound:
+            raise NoResultFound()
+        except InvalidRequestError:
+            raise InvalidRequestError()
+        return user
