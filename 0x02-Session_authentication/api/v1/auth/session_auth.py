@@ -45,7 +45,7 @@ class SessionAuth(Auth):
         """
         # Retrieves the session ID cookies from the reqest
         session_id = self.session_cookie(request)
-        # Look for the current user based on the use_id.
+        # Look for the current user based on the user_id.
         user_id = self.user_id_for_session_id(session_id)
         # Retrives the user instance on the database based on the user ID
         user = User.get(user_id)
@@ -59,8 +59,9 @@ class SessionAuth(Auth):
         session_id = self.session_cookie(request)
         user_id = self.user_id_for_session_id(session_id)
         # If the request is equal to None return False
-        if (request is None or session_id is None) or use_id is None:
+        if (request is None or session_id is None) or user_id is None:
             return False
         if session_id in self.user_id_by_session_id:
             del self.user_id_by_session_id[session_id]
         return True
+    
