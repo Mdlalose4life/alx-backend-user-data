@@ -55,9 +55,9 @@ class DB:
                 Invalid Kwarg is passed.
                 No results founf with the passed kwag
         """
-        user = self._session
+        session = self._session
         try:
-            user = self._session.query(User).filter_by(**kwargs).first()
+            user = session.query(User).filter_by(**kwargs).one()
         except NoResultFound:
             raise NoResultFound()
         except InvalidRequestError:
