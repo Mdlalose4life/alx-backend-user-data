@@ -52,3 +52,19 @@ class Auth:
         new_user = self._db.add_user(email, new_hashed_password)
         # Return the new user
         return new_user
+
+    
+    def valid_login(self, email: str, password: str) -> bool:
+        """
+        The function locates user by email, then if the user exists
+        We try to match it with existing password with the given email.
+        """
+        try:
+            # Find the user by thier emails.
+            user = self._db.find_user_by(email=email)
+            if user:
+                if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+                    return True
+        except NoResultFound:
+            return False
+        return False
