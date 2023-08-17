@@ -57,6 +57,7 @@ def login():
     respond.set_cookie("session_id", session_id)
     return respond
 
+
 @app.route("/sessions", methods=['DELETE'], strict_slashes=False)
 def logout() -> str:
     """
@@ -73,7 +74,7 @@ def logout() -> str:
     AUTH.destroy_session(user.id)
     # Then redirect home
     return redirect("/")
-    
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000", debug=True)
