@@ -95,4 +95,6 @@ class Auth:
             return None
         # Generate the session ID
         session_id = _generate_uuid()
+        # Store the session_id in the database.
+        self._db.update_user(user.id, session_id=session_id)
         return session_id
