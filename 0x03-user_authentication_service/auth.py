@@ -98,3 +98,22 @@ class Auth:
         # Store the session_id in the database.
         self._db.update_user(user.id, session_id=session_id)
         return session_id
+
+    def get_user_from_session_id(self, session_id) -> User
+    """
+    This funtion finds the user by the corresponding session_id.
+    then, it  returns that user or retunrs None, if the
+    user is not found.
+    """
+    # Return None if the session ID is none
+    if sesion_id is None:
+        return None
+    try:
+        # Try and find the user by the sessionID
+        user = _db.find_user_by(session_id=session_id)
+    # Except, the user is not found by it's session_Id, then
+    # return None
+    except NoResultFound:
+        return None
+    # else return the user
+    return user
