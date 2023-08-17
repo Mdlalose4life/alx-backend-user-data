@@ -132,7 +132,7 @@ class Auth:
 
     def get_reset_password_token(self, email: str) -> str:
         """
-        Finds the user corresponding to an email.
+        Updates the user password using a reset token
         """
         # Find the user by an email address.
         try:
