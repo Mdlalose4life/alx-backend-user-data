@@ -71,7 +71,7 @@ def logout() -> str:
         abort(403)
     # Otherwise delete the user on that id
     AUTH.destroy_session(user.id)
-    # Then redirect
+    # Then redirect home
     return redirect("/")
     
 
