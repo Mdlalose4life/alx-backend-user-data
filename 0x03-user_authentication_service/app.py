@@ -103,9 +103,9 @@ def get_reset_password_token() -> str:
     try:
         # Try to generate the reset token for the email.
         reset_token = AUTH.get_reset_password_token(email)
-    except ValueError
-    # if the email is not in a database, raise 403 error.
-    abort(403)
+    except ValueError:
+        # if the email is not in a database, raise 403 error.
+        abort(403)
     return jsonify({"email": email, "reset_token": reset token})
 
 
