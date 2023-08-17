@@ -128,4 +128,4 @@ class Auth:
             return None
         # Otherwise assign the session Id assosciated to a user
         # to None.
-        self._id.update_user(user_id, sesion_id=None)
+        self._id.update_user(user_id, session_id=None)
