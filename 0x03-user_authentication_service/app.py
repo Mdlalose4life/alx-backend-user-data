@@ -76,19 +76,18 @@ def logout() -> str:
     return redirect("/")
 
 
-@app.route("/profile", methods=['GET'], strict_slashes=False)
+@app.route("/profile", methods=["GET"], strict_slashes=False)
 def profile() -> str:
+    """GET /profile
     """
-    This methods responds to GET /profile
-    """
-    # Let's get the session ID
+    # Get the session ID from the "session_id" cookie in the request
     session_id = request.cookies.get("session_id")
-    # find a user by session ID
-    user = AUTH.get_user_from_session_id("session_id")
-    # if the user or session id does not exist respond with 403.
+    # Retrieve the user associated with the session ID
+    user = AUTH.get_user_from_session_id(session_id)
+    # If no user is found, abort the request with a 403 Forbidden error
     if user is None:
         abort(403)
-    # if the user exists, respond with 200 status
+    # Return the user's email as a JSON payload
     return jsonify({"email": user.email})
 
 
