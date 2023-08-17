@@ -106,7 +106,7 @@ def get_reset_password_token() -> str:
     except ValueError:
         # if the email is not in a database, raise 403 error.
         abort(403)
-    return jsonify({"email": email, "reset_token": reset token})
+    return jsonify({"email": email, "reset_token": reset_token})
 
 
 if __name__ == "__main__":
