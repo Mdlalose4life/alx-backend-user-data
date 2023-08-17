@@ -106,7 +106,7 @@ class Auth:
     user is not found.
     """
     # Return None if the session ID is none
-    if sesion_id is None:
+    if session_id is None:
         return None
     try:
         # Try and find the user by the sessionID
