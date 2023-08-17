@@ -67,7 +67,7 @@ def logout() -> str:
     # Find the user with the given session id.
     user = AUTH.get_user_from_session_id(session_Id)
     # abort with 401 statuss if the user is not found
-    if not user:
+    if user is None:
         abort(403)
     # Otherwise delete the user on that id
     AUTH.destroy_session(user.id)
