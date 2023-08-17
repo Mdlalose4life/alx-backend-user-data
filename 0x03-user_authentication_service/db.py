@@ -38,7 +38,7 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """Adds a new user to the db coresponfing to the given 
+        """Adds a new user to the db coresponfing to the given
         email and hashed password.
         """
         # Create new user
@@ -72,7 +72,7 @@ class DB:
             user = self.find_user_by(id=user_id)
         except NoResultFound:
             raise ValueError("User with id {} not found".format(user_id))
-            
+
         for key, value in kwargs.items():
             if not hasattr(user, key):
                 raise ValueError("User has no attribute {}".format(key))
