@@ -2,7 +2,11 @@
 """Hash Passsword module
 """
 import logging
+from db import DB
 import bcrypt
+from user import User
+from sqlalchemy.orm.exc import NoResultFound
+
 
 logging.disable(logging.WARNING)
 
@@ -22,3 +26,29 @@ def _hash_password(password: str) -> bytes:
     Hash = bcrypt.hashpw(byte, salt)
 
     return Hash
+
+
+class Auth:
+    """Auth class to interact with the authentication database.
+    """
+
+    def __init__(self):
+        self._db = DB()
+
+    def register_user(self, email: str, password: str) -> User:
+        """Register a new user based on the given password and email
+        """
+        try:
+            # Search similar email on our existing users.
+            self._db.find_user_by(email=email)
+            # Raise the ValuError if we find this email
+            # already existing.
+            raise ValueError(f'User {email} already exists')
+        except NoResultFound:
+            pass
+        # Hash the password if it does already not exist.
+        new_hashed_password = _hash_password(password)
+        # Save the use on the password.
+        new_user = self._db.add_user(email, new_hashed_password)
+        # Return the new user
+        return new_user
