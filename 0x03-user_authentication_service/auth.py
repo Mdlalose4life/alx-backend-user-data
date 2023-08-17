@@ -53,7 +53,6 @@ class Auth:
         # Return the new user
         return new_user
 
-    
     def valid_login(self, email: str, password: str) -> bool:
         """
         The function locates user by email, then if the user exists
@@ -63,7 +62,9 @@ class Auth:
             # Find the user by thier emails.
             user = self._db.find_user_by(email=email)
             if user:
-                if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+                password_bytes = password.encode('utf-8')
+                hashed_password = user.hashed_password
+                if bcrypt.checkpw(password_bytes, hashed_password):
                     return True
         except NoResultFound:
             return False
