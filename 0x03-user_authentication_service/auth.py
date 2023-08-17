@@ -6,6 +6,7 @@ import uuid
 from db import DB
 import bcrypt
 from user import User
+from typing import Union
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -99,7 +100,7 @@ class Auth:
         self._db.update_user(user.id, session_id=session_id)
         return session_id
 
-    def get_user_from_session_id(self, session_id) -> User
+    def get_user_from_session_id(self, session_id) -> Union[User, None]:
     """
     This funtion finds the user by the corresponding session_id.
     then, it  returns that user or retunrs None, if the
