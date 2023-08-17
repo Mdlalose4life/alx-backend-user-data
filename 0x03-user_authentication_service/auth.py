@@ -2,6 +2,7 @@
 """Hash Passsword module
 """
 import logging
+import uuid
 from db import DB
 import bcrypt
 from user import User
@@ -26,6 +27,13 @@ def _hash_password(password: str) -> bytes:
     Hash = bcrypt.hashpw(byte, salt)
 
     return Hash
+
+def _generate_uuid() -> str:
+    """
+    The function creates the uuid.
+    Then return the string representation of the uuid.
+    """
+    return str(uuid.uuid4())
 
 
 class Auth:
