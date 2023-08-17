@@ -3,7 +3,7 @@
 """
 import logging
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 logging.disable(logging.WARNING)
 
@@ -57,6 +57,23 @@ def login():
     respond.set_cookie("session_id", session_id)
     return respond
 
+@app.route("/sessions", methods=['DELETE'], strict_slashes=False)
+def logout():
+    """
+    Logging out the user.
+    """
+    # Send a request for session id
+    session_id = request.cookie.get("sesion_id")
+    # Find the user with the given session id.
+    user = AUTH.get_user_from_session_id(session_Id)
+    # abort with 401 statuss if the user is not found
+    if not user:
+        abort(403)
+    # Otherwise delete the user on that id
+    AUTH.destroy_session(user.id)
+    # Then redirect
+    return redirect("/")
+    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000", debug=True)
