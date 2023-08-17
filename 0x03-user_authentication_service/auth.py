@@ -123,10 +123,9 @@ class Auth:
         """
         Destroys the session associated with the user Id.
         """
-        # if the is no user, return None.
-        if user is None:
+        # if the is no user id, return None.
+        if user_id is None:
             return None
         # Otherwise assign the session Id assosciated to a user
         # to None.
         self._id.update_user(user_id, sesion_id=None)
-
