@@ -14,7 +14,7 @@ logging.disable(logging.WARNING)
 
 def _hash_password(password: str) -> bytes:
     """
-    This function takes in a passworgs and hash it
+    This function takes in a password and hash it
     so it is not stored in plane text.
     """
     # Convert the password to the bytes.
@@ -27,6 +27,7 @@ def _hash_password(password: str) -> bytes:
     Hash = bcrypt.hashpw(byte, salt)
 
     return Hash
+
 
 def _generate_uuid() -> str:
     """
