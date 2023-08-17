@@ -63,7 +63,7 @@ def logout() -> str:
     Logging out the user.
     """
     # Send a request for session id
-    session_id = request.cookies.get("sesion_id")
+    session_id = request.cookies.get("session_id")
     # Find the user with the given session id.
     user = AUTH.get_user_from_session_id(session_Id)
     # abort with 401 statuss if the user is not found
