@@ -3,7 +3,7 @@
 """
 import logging
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from auth import Auth
 logging.disable(logging.WARNING)
 
@@ -35,6 +35,27 @@ def users() -> str:
         return jsonify({"email": email, "message": "user created"})
     except ValueError:
         return jsonify({{"message": "email already registered"}}), 400
+
+
+@app.route("/sessions", methods=['POST'], strict_slashes=False)
+def login():
+    """
+    Funtion to that respond the the POST /session route
+    """
+    # Request the email
+    email = request.form.get("email")
+    # Request the password
+    password = request.form.get("password")
+    # Abort if emeil or passwor is not correct.
+    if not AUTH.valid_login(email, password):
+        abort(401)
+    # Create the session_id
+    session_id = AUTH.create_session(email)
+    # Send alert if the session ID ceated succesfully.
+    respond = jsonify({"email": email, "message": "logged in"})
+    # Set cookie for the sesion_id
+    respond.set_cookie("session_id", session_id)
+    return respond
 
 
 if __name__ == "__main__":
